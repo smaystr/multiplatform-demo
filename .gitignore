@@ -32,4 +32,8 @@ go.work
 Thumbs.db 
 
 # Archives and compressed files
-multiplatform-demo.tar.gz 
+*.tar.gz
+*.zip
+*.rar
+*.7z
+*.tar 
