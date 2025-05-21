@@ -85,6 +85,11 @@ docker-build:
 		--build-arg BUILD_TIME=$(BUILD_TIME) \
 		.
 
+# Ціль image для сумісності з перевірочною системою
+.PHONY: image
+image: docker-build
+	@echo "Image built successfully (via docker-build)"
+
 # Збірка Docker для ARM64
 .PHONY: docker-build-arm
 docker-build-arm:
@@ -145,6 +150,7 @@ help:
 	@echo "  all-platforms      - Build for all platforms"
 	@echo "  test               - Run tests"
 	@echo "  docker-build       - Build Docker image for current platform"
+	@echo "  image              - Alias for docker-build (for compatibility)"
 	@echo "  docker-build-arm   - Build Docker image for ARM64"
 	@echo "  docker-build-amd64 - Build Docker image for AMD64"
 	@echo "  docker-buildx      - Build multi-platform Docker image"
