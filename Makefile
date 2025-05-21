@@ -128,13 +128,7 @@ clean:
 	@echo "Cleaning..."
 	rm -rf $(OUTDIR)
 	@echo "Removing Docker images..."
-	-docker rmi $(IMAGE_TAG) 2>/dev/null || true
-	-docker rmi $(IMAGE_TAG)-amd64 2>/dev/null || true
-	-docker rmi $(IMAGE_TAG)-arm64 2>/dev/null || true
-	-docker rmi $(APP_NAME):latest 2>/dev/null || true
-	-docker rmi $(APP_NAME):v1.0.0 2>/dev/null || true
-	-docker rmi $(REPO_NAME)/$(APP_NAME):v1.0.0 2>/dev/null || true
-	-docker rmi ghcr.io/smaystr/$(APP_NAME):v1.0.0 2>/dev/null || true
+	@docker images --format "{{.Repository}}:{{.Tag}}" | grep "multiplatform-app" | xargs -r docker rmi >/dev/null 2>&1 || true
 	@echo "Clean completed."
 
 # Для документації
