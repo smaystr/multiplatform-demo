@@ -30,3 +30,6 @@ go.work
 # OS specific
 .DS_Store
 Thumbs.db 
+
+# Archives and compressed files
+multiplatform-demo.tar.gz 
