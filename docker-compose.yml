@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        - GIT_COMMIT=${GIT_COMMIT:-unknown}
+        - BUILD_TIME=${BUILD_TIME:-unknown}
+        - TARGETOS=${TARGETOS:-linux}
+        - TARGETARCH=${TARGETARCH:-amd64}
+    image: quay.io/smaystr/multiplatform-app:${TARGETARCH:-amd64}
+    container_name: multiplatform-app-${TARGETARCH:-amd64}
+    restart: unless-stopped
+    environment:
+      - TARGETPLATFORM=linux/${TARGETARCH:-amd64}
+    volumes:
+      - ./config:/config
+    networks:
+      - multiplatform-network
+
+networks:
+  multiplatform-network:
+    driver: bridge 
