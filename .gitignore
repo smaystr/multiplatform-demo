@@ -37,3 +37,8 @@ Thumbs.db
 *.rar
 *.7z
 *.tar 
+
+# Environment configuration files
+.env
+*.env
+env.local
