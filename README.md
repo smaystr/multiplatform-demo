@@ -2,6 +2,15 @@
 
 Проект демонструє можливості мультиплатформенної збірки з використанням Makefile та Docker для підтримки різних операційних систем та архітектур.
 
+## Проблема, яку вирішує проект
+
+Цей проект створено як рішення проблем із тимчасовими директоріями, що виникали в попередньому проекті Telegram-бота під час тестування на платформі Prometheus. Новий проект:
+
+- Не залежить від Python та його тимчасових директорій
+- Використовує ефективну архітектуру для крос-платформної розробки
+- Має чисту реалізацію без зайвих залежностей
+- Працює в контейнеризованому середовищі без проблем з правами доступу
+
 ## Функціональність
 
 Додаток відображає інформацію про систему, на якій він запущений, включаючи:
@@ -83,12 +92,54 @@ docker-compose up
 TARGETARCH=arm64 docker-compose up
 ```
 
+## Docker Usage Guide
+
+### Робота з тегами та версіями
+
+```sh
+# Змінити версію тега
+docker build -t quay.io/smaystr/multiplatform-app:v1.0.0 .
+docker push quay.io/smaystr/multiplatform-app:v1.0.0
+
+# Завантажити контейнер з репозиторію на будь-якій машині
+docker pull quay.io/smaystr/multiplatform-app:v1.0.0
+
+# Запустити контейнер
+docker run quay.io/smaystr/multiplatform-app:v1.0.0
+
+# Запустити з передачею змінних середовища (при необхідності)
+docker run -e VARIABLE_NAME=value quay.io/smaystr/multiplatform-app:v1.0.0
+# або
+docker run --env-file .env quay.io/smaystr/multiplatform-app:v1.0.0
+
+# Видалити старий тег локально
+docker rmi quay.io/smaystr/multiplatform-app:v0.9.0
+
+# Ретег існуючого образу
+docker tag quay.io/smaystr/multiplatform-app:v0.9.0 quay.io/smaystr/multiplatform-app:v1.0.0
+docker push quay.io/smaystr/multiplatform-app:v1.0.0
+
+# Збірка і запуск для швидкого тестування
+docker build -t multiplatform-app:latest .
+docker run multiplatform-app:latest
+
+# Запуск мультиархітектурного образу
+docker run --platform linux/arm64 quay.io/smaystr/multiplatform-app:latest
+```
+
 ## Очистка
 
 ```sh
 # Видалення бінарних файлів і Docker-образів
 make clean
 ```
+
+## Особливості реалізації
+
+- **Чиста архітектура**: проект не має зайвих залежностей та використовує стандартну бібліотеку Go
+- **Ефективний Dockerfile**: використовує багатоетапну збірку та базується на офіційному образі quay.io/projectquay/golang
+- **Підтримка багатьох архітектур**: оптимізовано для роботи на AMD64 та ARM64
+- **Автоматизація збірки**: детальний Makefile з численними цілями для різних сценаріїв
 
 ## Структура проекту
 
